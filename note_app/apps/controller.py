@@ -17,7 +17,11 @@ def fetch_all_notes():
     try:
         all_notes = Notes.query.all()
         result = [d.__dict__ for d in all_notes]
-        result = [{'id': x['id'], 'title':x['title'],'content':x['content']} for x in result]
+        print(result)
+        result = [{'id': x['id'],
+                   'title':x['title'],
+                   'content':x['content'],
+                   'time_logged':x['time_logged'].strftime("%m/%d/%Y, %H:%M:%S")} for x in result]
         return jsonify(result), 200
     except Exception as e:
         current_app.logger.info(e)
@@ -55,10 +59,11 @@ def delete_note():
         payload = request.json
         id = payload.get('id')
         record = Notes.query.filter_by(id=id).delete()
-        printf(f"Record -- {record}")
+        print(f"Record -- {record}")
         db.session.commit()
         return jsonify({'message': 'sucess'}), 200
     except Exception as e:
+        print(e)
         return jsonify({'message': 'failed'}), 400
 
 

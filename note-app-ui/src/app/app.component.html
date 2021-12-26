@@ -1,8 +1,8 @@
 <mat-toolbar color="white">   
-  <p>jOtter 📓</p>
+  <p>{{message}}</p>
 </mat-toolbar>
 <div class="mount">
-  <app-side-pannel></app-side-pannel>
-  <app-note-submit></app-note-submit>
+  <app-side-pannel ></app-side-pannel>
+  <app-note-submit (newItemEvent)="addItem($event)"></app-note-submit>
 </div>
 

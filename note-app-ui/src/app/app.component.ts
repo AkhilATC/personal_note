@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'note-app-ui';
+  public message = "Welcome to jOtter 📓. You can write what you ❤️"
+  ngOnInit(): void {
+  }
+  addItem(newItem: string){
+    console.log("-------gggg-----")
+    this.ngOnInit()
+    this.message = newItem
+   
+
+  }
 }

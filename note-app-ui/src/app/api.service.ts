@@ -11,4 +11,20 @@ export class ApiService {
   public getLatestNotes(){
     return this.httpClient.get(`${this.api_base_url}/fetch_notes`);
   };
+
+  public pushNote(payload){
+    //let params = new HttpParams();
+      console.log("--- SENDing API ---")
+      let response = this.httpClient.post(`${this.api_base_url}/write_note`,
+      payload
+      )
+      return response;
+  }
+  public deleteNote(payload){
+    let response = this.httpClient.post(`${this.api_base_url}/erase_note`,
+      payload
+      )
+      return response;
+
+  }
 }

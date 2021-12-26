@@ -23,6 +23,13 @@ export class SidePannelComponent implements OnInit {
   
   deleteNote(node){
     console.log(node)
+    let payloads = {'id':node.id }
+    this.apiService.deleteNote(payloads)
+          .subscribe((data)=>{
+            console.log(data);
+          },error  => {
+            console.log(error)            
+            });
   }
 
 }
