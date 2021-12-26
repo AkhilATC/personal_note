@@ -21,11 +21,11 @@ def fetch_all_notes():
         result = [{'id': x['id'],
                    'title':x['title'],
                    'content':x['content'],
-                   'time_logged':x['time_logged'].strftime("%m/%d/%Y, %H:%M:%S")} for x in result]
+                   'time_logged':x['time_logged'].strftime("%m/%d/%Y")} for x in result]
         return jsonify(result), 200
     except Exception as e:
         current_app.logger.info(e)
-        return jsonify({'status': 'Failed to fetch'}), 400
+        return jsonify([]), 400
 
 
 @note_module.route('/write_note', methods=['POST'])
@@ -43,7 +43,7 @@ def write_notes():
         note = Notes(title=title, content=content)
         db.session.add(note)
         db.session.commit()
-        return jsonify({'message': 'sucess'}), 200
+        return jsonify({'message': 'success'}), 200
     except Exception as e:
         return jsonify({'message': 'failed'}), 400
 
@@ -61,7 +61,7 @@ def delete_note():
         record = Notes.query.filter_by(id=id).delete()
         print(f"Record -- {record}")
         db.session.commit()
-        return jsonify({'message': 'sucess'}), 200
+        return jsonify({'message': 'success'}), 200
     except Exception as e:
         print(e)
         return jsonify({'message': 'failed'}), 400
@@ -79,6 +79,6 @@ def get_note(**kwargs):
         id = kwargs.get('id')
         record = Notes.query.get(id)
         printf(f"Record -- {record}")
-        return jsonify({'message': 'sucess', 'record':record}), 200
+        return jsonify({'message': 'success', 'record':record}), 200
     except Exception as e:
         return jsonify({'message': 'failed'}), 400

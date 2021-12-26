@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { ApiService } from '../api.service';
 })
 export class SidePannelComponent implements OnInit {
   public data:any = []
+ 
   constructor(public apiService:ApiService) { }
 
   ngOnInit(): void {
@@ -27,9 +28,13 @@ export class SidePannelComponent implements OnInit {
     this.apiService.deleteNote(payloads)
           .subscribe((data)=>{
             console.log(data);
+            this.bindNotes();
           },error  => {
             console.log(error)            
             });
   }
+
+  
+  
 
 }
