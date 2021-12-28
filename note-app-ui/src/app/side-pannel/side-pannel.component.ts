@@ -24,8 +24,7 @@ export class SidePannelComponent implements OnInit {
   
   deleteNote(node){
     console.log(node)
-    let payloads = {'id':node.id }
-    this.apiService.deleteNote(payloads)
+    this.apiService.deleteNote(node.id)
           .subscribe((data)=>{
             console.log(data);
             this.bindNotes();

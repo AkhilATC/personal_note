@@ -20,9 +20,9 @@ export class ApiService {
       )
       return response;
   }
-  public deleteNote(payload){
-    let response = this.httpClient.post(`${this.api_base_url}/erase_note`,
-      payload
+  public deleteNote(id){
+
+    let response = this.httpClient.delete(`${this.api_base_url}/${id}/erase_note`, 
       )
       return response;
 

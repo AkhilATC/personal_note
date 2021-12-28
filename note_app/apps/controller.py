@@ -7,13 +7,28 @@ from apps.model import Notes
 # blueprint definition
 note_module = Blueprint('note_module', __name__, url_prefix='/my_note_space')
 
+# http://192.168.18.9:7001/apidocs/#/
+
 
 @note_module.route('/fetch_notes', methods=['GET'])
 def fetch_all_notes():
-    """
+    """Example endpoint for get list of notes
+       This is using docstrings for specifications.
+       ---
+       tags:
+            - my_note_space
+       responses:
+         200:
+           description: A list of objects
+           examples:
+             application/json:
+                [{"content": "NB- Buy veggies","id": 1,"time_logged": "12/26/2021","title": "do some"}]
 
-    :return:
-    """
+         400:
+           description: A empty list
+           examples:
+                []
+       """
     try:
         all_notes = Notes.query.all()
         result = [d.__dict__ for d in all_notes]
@@ -30,10 +45,34 @@ def fetch_all_notes():
 
 @note_module.route('/write_note', methods=['POST'])
 def write_notes():
-    """
+    """Example endpoint for write notes
+           This is using docstrings for specifications.
+           ---
+           parameters:
+                - name: title
+                  in : payload
+                  required: true
+                  type: String
+                  description: title name
+                - name: content
+                  in : payload
+                  required: true
+                  type: String
+                  description: content of notes
+           tags:
+                - my_note_space
+           responses:
+             200:
+               description: Sucessfully write notes
+               examples:
+                 application/json:
+                    {'message': 'success'}
 
-    :return:
-    """
+             400:
+               description: fail response
+               examples:
+                    {'message': 'failed'}
+           """
     try:
         payload = request.json
         title = payload.get('title')
@@ -48,16 +87,37 @@ def write_notes():
         return jsonify({'message': 'failed'}), 400
 
 
-@note_module.route('/erase_note', methods=['POST'])
-def delete_note():
-    """
+@note_module.route('/<id>/erase_note', methods=['DELETE'])
+def delete_note(**kwargs):
+    """Example endpoint for delete notes
+               This is using docstrings for specifications.
+               ---
+               parameters:
+                    - name: id
+                      in : path
+                      required: true
+                      type: String
+                      description: unique id of note
 
-    :return:
+               tags:
+                    - my_note_space
+               responses:
+                 200:
+                   description: Successfully delete notes
+                   examples:
+                     application/json:
+                        {'message': 'success'}
+
+                 400:
+                   description: fail response
+                   examples:
+                        {'message': 'failed'}
     """
     try:
         # user = User.query.get(id)
-        payload = request.json
-        id = payload.get('id')
+
+
+        id = kwargs.get('id')
         record = Notes.query.filter_by(id=id).delete()
         print(f"Record -- {record}")
         db.session.commit()
